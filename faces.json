@@ -1,0 +1,12 @@
+{
+    "persons": [
+        {
+            "name": "Nanda Monio",
+            "image": ["nand.jpg","nand1.jpg","nand2.jpg","nand3.jpg","naand4.jpg"]
+        },
+        {
+            "name": "Subhash",
+            "image": "subhash.jpg"
+        }
+    ]
+}

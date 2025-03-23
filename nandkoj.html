@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Keyword Search</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+            color: white;
+            margin: 0;
+        }
+        /* Main Container */
+        #container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        #container:hover {
+            transform: scale(1.02);
+        }
+        /* Input and Button */
+        input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background: #ff5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+        button:hover {
+            background: #ff2e00;
+        }
+        /* Result Box */
+        #result {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        #result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5);
+        }
+        /* QR Container */
+        #qr-container {
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out 0.3s;
+        }
+        #qr-container.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h2>🔍 AR Keyword Search</h2>
+        <input type="text" id="search" placeholder="Enter keyword (heart, panzer, microscope, telescope)">
+        <button onclick="searchKeyword()">Search</button>
+        <div id="result"></div>
+        <div id="qr-container"></div>
+    </div>
+
+    <script>
+        const dataset = {
+            "heart": {
+                "image": "images/heart.png",
+                "explanation": "The heart is a vital organ that pumps blood throughout the body.",
+                "qr": "images/heart_qr.png"
+            },
+            "panzer": {
+                "image": "images/panzer.png",
+                "explanation": "The Panzer is a series of German battle tanks used in WWII.",
+                "qr": "images/panzer_qr.png"
+            },
+            "microscope": {
+                "image": "images/microscope.png",
+                "explanation": "A microscope is an instrument used to magnify small objects.",
+                "qr": "images/microscope_qr.png"
+            },
+            "telescope": {
+                "image": "images/telescope.png",
+                "explanation": "A telescope is used to observe distant objects in space.",
+                "qr": "images/telescope_qr.png"
+            }
+        };
+
+        function searchKeyword() {
+            const keyword = document.getElementById("search").value.toLowerCase();
+            const resultDiv = document.getElementById("result");
+            const qrContainer = document.getElementById("qr-container");
+
+            resultDiv.innerHTML = "";
+            qrContainer.innerHTML = "";
+            resultDiv.classList.remove("show");
+            qrContainer.classList.remove("show");
+
+            if (dataset[keyword]) {
+                const data = dataset[keyword];
+
+                resultDiv.innerHTML = `
+                    <img src="${data.image}" alt="${keyword}">
+                    <p>${data.explanation}</p>
+                `;
+                qrContainer.innerHTML = `<img src="${data.qr}" alt="QR Code for ${keyword}">`;
+
+                setTimeout(function() {
+                    resultDiv.classList.add("show");
+                    qrContainer.classList.add("show");
+                }, 100);
+            } else {
+                resultDiv.innerHTML = "<p>No data found.</p>";
+                resultDiv.classList.add("show");
+            }
+        }
+    </script>
+
+</body>
+</html>
